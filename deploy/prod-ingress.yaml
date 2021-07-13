@@ -1,7 +1,10 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   labels:
     app: app
     version: 1.0.0
@@ -9,10 +12,13 @@ metadata:
   namespace: demo-prod
 spec:
   rules:
-  - host: canary-demo.example.com
-    http:
+  - http:
       paths:
       - backend:
-          serviceName: demo-prod
-          servicePort: 80
+          service:
+            name: demo-prod
+            port:
+              number: 80
         path: /
+        pathType: Prefix
+
