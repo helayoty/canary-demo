@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: demo
+    app: aks-helloworld
     version: 1.0.0
-   name: aks-helloworld
+  name: aks-helloworld
   namespace: demo-prod
 spec:
   replicas: 1
@@ -29,9 +29,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: aks-helloworld
+  namespace: demo-prod
 spec:
   type: ClusterIP
   ports:
   - port: 80
   selector:
+    version: 1.0.0
     app: aks-helloworld
