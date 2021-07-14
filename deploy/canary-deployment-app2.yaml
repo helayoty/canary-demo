@@ -19,15 +19,22 @@ spec:
         version: 1.0.1
     spec:
       containers:
-      - name: aks-helloworld
-        image: mcr.microsoft.com/azuredocs/aks-helloworld:v1
-        ports:
-        - containerPort: 80
-        env:
-        - name: TITLE
-          value: "Welcome to Azure Kubernetes Service CANARY (AKS)"
-        - name: VERSION
-          value: "1.0.1 - canary"
+        - name: canary-demo
+          image: helayoty/canary-demo:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 50m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
+          env:
+          - name: VERSION
+            value: "1.0.1 - canary"
       restartPolicy: Always
 ---
 apiVersion: v1

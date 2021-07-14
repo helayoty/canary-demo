@@ -5,13 +5,11 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    # nginx.ingress.kubernetes.io/use-regex: "true"
-    # nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/canary: "true"
     nginx.ingress.kubernetes.io/canary-weight: "50"
   labels:
     app: demo
-  name: demo-ingress
+  name: canary-ingress
   namespace: demo-canary
 spec:
   rules:
@@ -24,10 +22,10 @@ spec:
             name: demo-canary
             port:
               number: 80
-      # - path: /hello-world-canary(/|$)(.*)
-      #   pathType: Prefix
-      #   backend:
-      #     service:
-      #       name: aks-helloworld-canary
-      #       port:
-      #         number: 90
+      - path: /hello-world
+        pathType: Prefix
+        backend:
+          service:
+            name: aks-helloworld-canary
+            port:
+              number: 90
