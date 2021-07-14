@@ -7,9 +7,11 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/canary: "true"
     nginx.ingress.kubernetes.io/canary-weight: "50"
+    nginx.ingress.kubernetes.io/use-regex: "true"
   labels:
     app: demo
-  name: canary-ingress
+    version: 1.0.1
+  name: demo-ingress
   namespace: demo-canary
 spec:
   rules:
