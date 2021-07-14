@@ -11,10 +11,12 @@ spec:
   selector:
     matchLabels:
       app: aks-helloworld
+      version: 1.0.0
   template:
     metadata:
       labels:
         app: aks-helloworld
+        version: 1.0.0
     spec:
       containers:
       - name: aks-helloworld
@@ -24,6 +26,9 @@ spec:
         env:
         - name: TITLE
           value: "Welcome to Azure Kubernetes Service (AKS)"
+        - name: VERSION
+          value: "1.0.0"
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -33,7 +38,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 80
+  - port: 90
   selector:
     version: 1.0.0
     app: aks-helloworld

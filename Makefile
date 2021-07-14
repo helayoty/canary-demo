@@ -1,11 +1,7 @@
 
-build: dep vet build-canary
+build: vet build-canary
 step-1: dry-run deploy-prod
 step-2: dry-run deploy-canary
-
-dep:
-	go get github.com/Masterminds/glide
-	glide install
 
 vet: 
 	go vet ./cmd/main.go

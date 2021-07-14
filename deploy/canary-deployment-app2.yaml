@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: aks-helloworld
+    app: aks-helloworld-canary
     version: 1.0.1
   namespace: demo-canary
   name: aks-helloworld-canary
@@ -10,11 +10,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: aks-helloworld
+      app: aks-helloworld-canary
+      version: 1.0.1
   template:
     metadata:
       labels:
-        app: aks-helloworld
+        app: aks-helloworld-canary
+        version: 1.0.1
     spec:
       containers:
       - name: aks-helloworld
@@ -24,6 +26,9 @@ spec:
         env:
         - name: TITLE
           value: "Welcome to Azure Kubernetes Service CANARY (AKS)"
+        - name: VERSION
+          value: "1.0.1 - canary"
+      restartPolicy: Always
 ---
 apiVersion: v1
 kind: Service
@@ -33,7 +38,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-  - port: 80
+  - port: 90
   selector:
     version: 1.0.1
     app: aks-helloworld-canary

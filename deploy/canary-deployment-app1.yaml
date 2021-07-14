@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: canary-demo
-          image: stoehdoi/canary-demo:1.0.0
+          image: helayoty/canary-demo:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
@@ -37,3 +37,4 @@ spec:
           - name: VERSION
             value: "1.0.1 - canary"
       restartPolicy: Always
+ 
