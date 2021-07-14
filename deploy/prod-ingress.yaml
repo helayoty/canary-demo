@@ -14,11 +14,18 @@ spec:
   rules:
   - http:
       paths:
-      - backend:
+      - path: /demo-prod
+        pathType: Prefix
+        backend:
           service:
             name: demo-prod
             port:
               number: 80
-        path: /
+      - path: /hello-world-prod
         pathType: Prefix
+        backend:
+          service:
+            name: ingress-demo
+            port:
+              number: 90
 

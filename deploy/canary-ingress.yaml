@@ -15,10 +15,17 @@ spec:
   rules:
   - http:
       paths:
-      - backend:
+      - path: /demo-canary
+        pathType: Prefix
+        backend:
           service:
             name: demo-canary
             port:
               number: 80
-        path: /
+      - path: /hello-world-canary
         pathType: Prefix
+        backend:
+          service:
+            name: ingress-demo
+            port:
+              number: 90

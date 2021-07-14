@@ -16,12 +16,12 @@ build-canary:
 deploy-prod:
 	kubectl apply -f ./deploy/prod-namespace.yaml
 	sleep 2
-	kubectl apply -f ./deploy/prod-deployment.yaml,./deploy/prod-service.yaml,./deploy/prod-ingress.yaml  
+	kubectl apply -f ./deploy/prod-deployment-app1.yaml,./deploy/prod-deployment-app2.yaml,./deploy/prod-service.yaml,./deploy/prod-ingress.yaml  
 
 deploy-canary: 
 	kubectl apply -f ./deploy/canary-namespace.yaml
 	sleep 2
-	kubectl apply -f ./deploy/canary-deployment.yaml,./deploy/canary-service.yaml,./deploy/canary-ingress.yaml  
+	kubectl apply -f ./deploy/canary-deployment-app1.yaml,./deploy/canary-deployment-app2.yaml,./deploy/canary-service.yaml,./deploy/canary-ingress.yaml  
 
 dry-run:
 	kubectl apply -f ./deploy/. --dry-run
