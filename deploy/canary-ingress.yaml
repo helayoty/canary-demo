@@ -22,10 +22,10 @@ spec:
             name: demo-canary
             port:
               number: 80
-      - path: /hello-world
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: aks-helloworld-canary
             port:
-              number: 90
+              number: 80
