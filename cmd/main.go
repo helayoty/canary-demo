@@ -69,11 +69,8 @@ func env() string {
 func main() {
 	version := env()
 	http.HandleFunc("/version", returnVersion(version))
-	http.HandleFunc("hello-world/version", returnVersion(version))
 	http.HandleFunc("/metrics", returnMetrics)
-	http.HandleFunc("hello-world/metrics", returnMetrics)
 	http.HandleFunc("/reset", reset)
-	http.HandleFunc("hello-world/reset", reset)
 	logrus.Infoln("HTTP Server is up and listening ...")
 	logrus.Fatalln(http.ListenAndServe(":8080", nil))
 }

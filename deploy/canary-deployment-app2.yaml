@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: canary-demo
-          image: helayoty/canary-demo:1.0.0
+          image: helayoty/canary-demo:2.0.0
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
