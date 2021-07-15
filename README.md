@@ -21,15 +21,15 @@ $ make step-1
 ##### Run tests  
 Execute the following commands to send n=1000 requests to the endpoint
 ```bash
-$ ab -n 1000 -c 100 -s 60 "http://<your_URL>/version"
-$ curl -s "http://<your_URL>/metrics" | jq '.calls'
+$ ab -n 1000 -c 100 -s 60 -m GET -H "HOST: <YOU_HOST>" "http://<your_URL>/version"
+$ curl -s -H 'HOST: <YOU_HOST>' "http://<your_URL>/metrics" | jq '.calls'
 ```
 If everything is working as expected, the curl command should return "1000".
   
 ##### Reset request counter  
 Send GET requests to /reset endpoint to set the request counter to zero
 ```bash
-$ curl "http://<your_URL>/reset"
+$ curl -H 'HOST: <YOU_HOST>' "http://<your_URL>/reset"
 ```
   
 ##### Canary deployment  
@@ -41,16 +41,14 @@ $ make step-2
 ##### Perform tests  
 Again, start sending traffic to the endpoint
 ```bash
-$ ab -n 1000 -c 100 -s 60 "http://<your_URL>/version"
+$ ab -n 1000 -c 100 -s 60 GET -H "HOST: <YOU_HOST>" "http://<your_URL>/version"
 ```
   
-##### Verify the weight split  
-Do a port forward to each of the pods to check the request count
+##### Verify the weight split 
+
 ```bash
-$ kubectl -n demo-prod port-forward <pod-name> 8080:8080
-$ curl -s http://localhost:8080/metrics | jq '.calls'
-$ kubectl -n demo-prod port-forward <pod-name> 8081:8080
-$ curl -s http://localhost:8081/metrics | jq '.calls'
+$ curl -s -H 'HOST: <YOU_HOST>' http://<YOUR_INGRESS)EXTERNAL_IP>/metrics | jq '.calls'
+$ curl -s -H 'HOST: <YOU_HOST>' http://<YOUR_INGRESS)EXTERNAL_IP>/metrics | jq '.calls'
 ```
 Unless the weight has been changed to a different value, you should see approximately 800 requests being served by the production deployment and the remainig 200 by the canary. 
 
