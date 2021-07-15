@@ -22,5 +22,13 @@ deploy-canary:
 dry-run:
 	kubectl apply -f ./deploy/. --dry-run
 
+docker-build:
+	docker build --tag helayoty/canary-demo:1.0.0 .
+	docker build --tag helayoty/canary-demo:2.0.0 .
+
+docker-push:
+	docker push helayoty/canary-demo:1.0.0
+	docker push helayoty/canary-demo:2.0.0
+
 clean-up:
 	kubectl delete -f ./deploy/.
