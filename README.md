@@ -6,6 +6,10 @@ This repository contains all resources that are required to test the canary feat
 * Kubernetes cluster 
 * NGINX Ingress Controller 0.21.0+
 
+```bash
+helm install nginx-ingress ingress-nginx/ingress-nginx     --namespace ingress-nginx  --set controller.replicaCount=2     --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux     --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux     --set controller.admissionWebhooks.patch.nodeSelector."beta\.kubernetes\.io/os"=linux --set controller.metrics.enabled=true --set-string controller.podAnnotations."prometheus\.io/scrape"="true" --set-string controller.podAnnotations."prometheus\.io/port"="10254"
+```
+
 ## Getting Started
 
 ### Canary Test Scenario
@@ -50,9 +54,19 @@ $ ab -n 1000 -c 100 -s 60 GET -H "HOST: <YOU_HOST>" "http://<your_URL>/version"
 $ curl -s -H 'HOST: <YOU_HOST>' http://<YOUR_INGRESS)EXTERNAL_IP>/metrics | jq '.calls'
 $ curl -s -H 'HOST: <YOU_HOST>' http://<YOUR_INGRESS)EXTERNAL_IP>/metrics | jq '.calls'
 ```
-Unless the weight has been changed to a different value, you should see approximately 800 requests being served by the production deployment and the remainig 200 by the canary. 
 
-### Delete
+Unless the weight has been changed to a different value, you should see approximately 500 requests being served by the production deployment and the remainig 500 by the canary. 
+
+##### Verify the weight split with prometheus and grafana
+
+Install prometheus & grafana by following the instructions [here](https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/)
+
+
+
+![nginx-ingress-controller](/.images/nginx-ingress-controller.png)
+![request-handling-performance](/.images/request-handling-performance.png)
+
+### Clean-up
 Remove all resource from the cluster 
 ```bash
 $ make clean-up
